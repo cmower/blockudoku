@@ -22,5 +22,5 @@ $ python main.py [OPTIONS]
 ```
 
 Options:
-* `--usealtmusic`: play alternative music track
+* `--altmusic`: play alternative music track
 * `--nosound`: music is not played
