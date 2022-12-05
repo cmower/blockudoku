@@ -85,11 +85,13 @@ class Grid:
             for (i, j) in self.block_pos_ref:
                 i += ii
                 j += jj
-                self.pattern[i][j] = 'O'
+                self.positions_to_make_blank.append((i, j))
         return update_score
 
 
     def handle_full_areas(self):
+
+        self.positions_to_make_blank = []
 
         update_score = 0
 
@@ -103,8 +105,7 @@ class Grid:
             if n == self.ncol:
                 update_score += self.ncol
                 for j in range(self.ncol):
-                    self.pattern[i][j] = 'O'
-
+                    self.positions_to_make_blank.append((i, j))
 
         for j in range(self.ncol):
 
@@ -116,7 +117,8 @@ class Grid:
             if n == self.nrow:
                 update_score += self.nrow
                 for i in range(self.nrow):
-                    self.pattern[i][j] = 'O'
+                    self.positions_to_make_blank.append((i, j))
+
 
 
         update_score += self.handle_block(0, 0)
@@ -130,5 +132,8 @@ class Grid:
         update_score += self.handle_block(0, 6)
         update_score += self.handle_block(3, 6)
         update_score += self.handle_block(6, 6)
+
+        for i, j in self.positions_to_make_blank:
+            self.pattern[i][j] = 'O'
 
         return update_score
