@@ -5,10 +5,12 @@ class BlockState(Enum):
     UNFILLED=0
     READY_TO_BE_FILLED=1
     FILLED=2
+    CANT_BE_FILLED=3
 
 block_colors = {
     BlockState.UNFILLED: pg.Color(135, 206, 250), # lightskyblue
     BlockState.READY_TO_BE_FILLED: pg.Color(255, 255, 51),  # electric yellow
+    BlockState.CANT_BE_FILLED: pg.Color(255, 0, 0),  # red
     BlockState.FILLED: pg.Color(255, 0, 255), # magenta
 }
 

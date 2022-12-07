@@ -64,12 +64,30 @@ class Grid:
                 self.blocks[i][j].draw(surface, c)
 
         if selected_item:
+            if self.can_selected_item_fit(selected_item):
+                c = block_colors[BlockState.READY_TO_BE_FILLED]
+            else:
+                c = block_colors[BlockState.CANT_BE_FILLED]
+
             for pos in selected_item.positions():
                 for i in range(self.nrow):
                     for j in range(self.ncol):
                         b = self.blocks[i][j]
                         if b.inside(pos):
-                            b.draw(surface, block_colors[BlockState.READY_TO_BE_FILLED])
+                            b.draw(surface, c)
+
+    def can_selected_item_fit(self, item):
+        for pos in item.positions():
+            for i in range(self.nrow):
+                for j in range(self.ncol):
+                    b = self.blocks[i][j]
+                    if b.inside(pos) and self.pattern[i][j] == 'X':
+                        return False
+        return True
+
+
+
+
 
 
     def handle_block(self, ii, jj):
