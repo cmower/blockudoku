@@ -64,7 +64,7 @@ class Grid:
                 self.blocks[i][j].draw(surface, c)
 
         if selected_item:
-            if self.can_selected_item_fit(selected_item):
+            if self.can_selected_item_fit_in_user_selection(selected_item):
                 c = block_colors[BlockState.READY_TO_BE_FILLED]
             else:
                 c = block_colors[BlockState.CANT_BE_FILLED]
@@ -76,7 +76,7 @@ class Grid:
                         if b.inside(pos):
                             b.draw(surface, c)
 
-    def can_selected_item_fit(self, item):
+    def can_selected_item_fit_in_user_selection(self, item):
         for pos in item.positions():
             for i in range(self.nrow):
                 for j in range(self.ncol):
