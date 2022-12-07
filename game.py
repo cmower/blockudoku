@@ -35,6 +35,10 @@ class Game:
 
             pg.mixer.music.play(-1)
 
+        self.reset_items()
+
+
+    def reset_items(self):
         self.item_options = [
             get_random_item('left', self.width),
             get_random_item('center', self.width),
@@ -61,7 +65,10 @@ class Game:
                 loc = 'right'
             else:
                 raise ValueError(f"index '{idx}' not recognized!")
-            self.item_options[idx] = get_random_item(loc, self.width)
+            # self.item_options[idx] = get_random_item(loc, self.width)
+            self.item_options[idx] = None
+            if all(i is None for i in self.item_options):
+                self.reset_items()
             self.grid.last_selected_item = None
 
             self.score += self.grid.handle_full_areas()
@@ -94,6 +101,7 @@ class Game:
 
         selected_item = None
         for item in self.item_options:
+            if item is None: continue
             if item.selected:
                 selected_item = item
                 break
@@ -101,6 +109,7 @@ class Game:
         self.grid.draw(self.screen, selected_item)
         self.draw_score()
         for item in self.item_options:
+            if item is None: continue
             item.draw(self.screen)
 
     def update_screen(self):
