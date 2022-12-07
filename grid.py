@@ -13,7 +13,9 @@ class Grid:
         (2, 0), (2, 1), (2, 2),
     ]
 
-    def __init__(self):
+    def __init__(self, agent):
+
+        self.agent = agent
 
         self.last_selected_item = None
         self.pattern = [['O']*self.ncol for _ in range(self.nrow)]

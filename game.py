@@ -6,12 +6,15 @@ pg.init()
 from grid import Grid, GridBlock
 from items import get_random_item
 
+from agent import AGENTBUTTONUP
+
 class Game:
 
     framerate = 20
     num_item_opts = 1
 
-    def __init__(self, args):
+    def __init__(self, args, agent):
+        self.agent = agent
         self.score = 0
         pannel_height = 300
         self.height = Grid.nrow*GridBlock.height + GridBlock.yoffset + pannel_height
@@ -19,11 +22,11 @@ class Game:
         self.screen = pg.display.set_mode((self.width, self.height))
         pg.display.set_caption('Blockudoku')
         self.clock = pg.time.Clock()
-        self.grid = Grid()
+        self.grid = Grid(self.agent)
         self.running = True
         self.event_action_map = {
             pg.QUIT: self.quit_game,
-            pg.MOUSEBUTTONUP: self.handle_grid,
+            AGENTBUTTONUP: self.handle_grid,
         }
         self.sound = '--nosound' not in args
         if self.sound:
@@ -40,13 +43,13 @@ class Game:
 
     def reset_items(self):
         self.item_options = [
-            get_random_item('left', self.width),
-            get_random_item('center', self.width),
-            get_random_item('right', self.width),
+            get_random_item('left', self.width, self.agent),
+            get_random_item('center', self.width, self.agent),
+            get_random_item('right', self.width, self.agent),
         ]
 
     def handle_events(self):
-        for event in pg.event.get():
+        for event in self.agent.get_events():
             handler = self.event_action_map.get(event.type)
             if handler:
                 handler(event)
@@ -126,14 +129,16 @@ class Game:
         self.clock.tick(Game.framerate)
 
     def get_screen_np(self):
-        return pg.surfarray.pixels3d(self.screen)
+        return pg.surfarray.pixels3d(self.screen.copy())
 
     def spin(self):
         try:
             while self.running:
                 self.draw()
                 self.update_screen()
+                self.agent.reset(self.get_screen_np())
                 self.tick()
                 self.handle_events()
+                self.agent.set_score(self.score)
         except KeyboardInterrupt:
             self.quit_game()

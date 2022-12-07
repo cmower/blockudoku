@@ -32,8 +32,8 @@ class GridBlock:
             x*self.width+self.xoffset, y*self.height+self.yoffset, self.width, self.height
         )
 
-    def inside(self, mouse_position):
-        x, y = mouse_position
+    def inside(self, position):
+        x, y = position
         in_x = self.xoffset+self.x*self.width <= x <= self.x*self.width + self.width + self.xoffset
         in_y = self.yoffset+self.y*self.height <= y <= self.y*self.height + self.height + self.yoffset
         return in_x and in_y

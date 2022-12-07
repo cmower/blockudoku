@@ -10,7 +10,8 @@ class Item:
     preview_scale = 0.5
     init_xoffset = 40
 
-    def __init__(self, initial_location, screen_width):
+    def __init__(self, initial_location, screen_width, agent):
+        self.agent = agent
         self.initial_location = initial_location
         self.selected = False
         self.y = 750
@@ -67,8 +68,8 @@ class Item:
 
     def draw(self, surface):
 
-        mouse_position = pg.mouse.get_pos()
-        mouse_pressed = pg.mouse.get_pressed()[0]
+        mouse_position = self.agent.mouse_position()
+        mouse_pressed = self.agent.mouse_pressed()
 
         item = self.make_surface()
         preview = self.make_preview(item)
@@ -306,6 +307,6 @@ all_item_cls_handles = [
     LargeT4,
 ]
 
-def get_random_item(location, screen_width):
+def get_random_item(location, screen_width, agent):
     ItemCls = random.choice(all_item_cls_handles)
-    return ItemCls(location, screen_width)
+    return ItemCls(location, screen_width, agent)
