@@ -25,6 +25,9 @@ class Agent(abc.ABC):
         self.screen_np = screen_np
         self._reset()
 
+    def save_screen_as_png(self):
+        Image.fromarray(self.screen_np).save(f"screen_{time.time_ns()}.png")
+
     @abc.abstractmethod
     def set_score(self, score):
         pass
@@ -59,9 +62,6 @@ class Human(Agent):
 
     def _reset(self):
         self._mouse_pressed = pg.mouse.get_pressed()[0]
-
-    def save_screen_as_png(self):
-        Image.fromarray(self.screen_np).save(f"screen_{time.time_ns()}.png")
 
     def mouse_position(self):
         return pg.mouse.get_pos()
