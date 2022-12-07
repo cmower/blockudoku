@@ -11,6 +11,7 @@ class Item:
     init_xoffset = 40
 
     def __init__(self, initial_location, screen_width):
+        self.initial_location = initial_location
         self.selected = False
         self.y = 750
         if initial_location == 'left':
@@ -32,6 +33,16 @@ class Item:
     @property
     def ncol(self):
         return max(len(r) for r in self.pattern)
+
+    @property
+    def num_blocks(self):
+        return sum(p.count('X') for p in self.pattern)
+
+    def block_indices(self):
+        for i, r in enumerate(self.pattern):
+            for j, b in enumerate(r):
+                if b == 'X':
+                    yield (i, j)
 
     def make_surface(self):
         surface = pg.Surface((self.ncol*GridBlock.width, self.nrow*GridBlock.height), pg.SRCALPHA)

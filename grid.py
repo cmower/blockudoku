@@ -85,11 +85,6 @@ class Grid:
                         return False
         return True
 
-
-
-
-
-
     def handle_block(self, ii, jj):
         update_score = 0
         n = 0

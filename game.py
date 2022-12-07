@@ -65,13 +65,19 @@ class Game:
                 loc = 'right'
             else:
                 raise ValueError(f"index '{idx}' not recognized!")
-            # self.item_options[idx] = get_random_item(loc, self.width)
             self.item_options[idx] = None
             if all(i is None for i in self.item_options):
                 self.reset_items()
             self.grid.last_selected_item = None
-
             self.score += self.grid.handle_full_areas()
+
+    def draw_gameover(self):
+        c = pg.Color(255, 0, 0) # red
+        surface = pg.font.SysFont(None, 100).render('Game Over!', True, c)
+        rect = surface.get_rect()
+        rect.center = (int(0.5*float(self.width)), 200)
+        self.screen.blit(surface, rect)
+        self.update_screen()
 
     def draw_goodbye(self):
         c = pg.Color(255, 0, 0) # red
@@ -118,6 +124,9 @@ class Game:
 
     def tick(self):
         self.clock.tick(Game.framerate)
+
+    def get_screen_np(self):
+        return pg.surfarray.pixels3d(self.screen)
 
     def spin(self):
         try:
