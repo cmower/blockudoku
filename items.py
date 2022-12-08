@@ -192,7 +192,7 @@ class LShapeType4(Item):
 
 class BkwLShapeType1(Item):
     pattern = [
-        'X  ',
+        'X',
         'XXX',
     ]
 
@@ -277,6 +277,62 @@ class LargeT4(Item):
         '  X',
     ]
 
+class LargeLShapeType1(Item):
+    pattern = [
+        '  X',
+        '  X',
+        'XXX',
+    ]
+
+class LargeLShapeType2(Item):
+    pattern = [
+        'X',
+        'X',
+        'XXX',
+    ]
+
+class LargeLShapeType3(Item):
+    pattern = [
+        'XXX',
+        'X',
+        'X',
+    ]
+
+class LargeLShapeType4(Item):
+    pattern = [
+        'XXX',
+        '  X',
+        '  X',
+    ]
+
+class BkwLargeLShapeType1(Item):
+    pattern = [
+        'X',
+        'X',
+        'XXX',
+    ]
+
+class BkwLargeLShapeType2(Item):
+    pattern = [
+        'XXX',
+        'X',
+        'X',
+    ]
+
+class BkwLargeLShapeType3(Item):
+    pattern = [
+        'XXX',
+        '  X',
+        '  X',
+    ]
+
+class BkwLargeLShapeType4(Item):
+    pattern = [
+        '  X',
+        '  X',
+        'XXX',
+    ]
+
 
 all_item_cls_handles = [
     SingleSquare,
@@ -305,6 +361,14 @@ all_item_cls_handles = [
     LargeT2,
     LargeT3,
     LargeT4,
+    LargeLShapeType1,
+    LargeLShapeType2,
+    LargeLShapeType3,
+    LargeLShapeType4,
+    BkwLargeLShapeType1,
+    BkwLargeLShapeType2,
+    BkwLargeLShapeType3,
+    BkwLargeLShapeType4,
 ]
 
 def get_random_item(location, screen_width, agent):
