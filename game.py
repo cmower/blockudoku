@@ -40,6 +40,9 @@ class Game:
 
         self.reset_items()
 
+        self.show_cursor = True
+        if '--nocursor' in args:
+            self.show_cursor = False
 
     def reset_items(self):
         self.item_options = [
@@ -121,6 +124,15 @@ class Game:
             if item is None: continue
             item.draw(self.screen)
 
+        if self.show_cursor:
+            mouse_position = self.agent.mouse_position()
+            pg.draw.circle(
+                self.screen,
+                pg.Color(0, 0, 255),  # blue
+                mouse_position,
+                8
+            )
+
     def update_screen(self):
         pg.display.flip()
         pg.display.update()
@@ -137,6 +149,7 @@ class Game:
                 self.draw()
                 self.update_screen()
                 self.agent.reset(self.get_screen_np())
+                # self.agent.save_screen_as_png()
                 self.tick()
                 self.handle_events()
                 self.agent.set_score(self.score)

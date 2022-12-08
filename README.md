@@ -22,5 +22,6 @@ $ python main.py [OPTIONS]
 ```
 
 Options:
+* `--nocursor`: optionally show the cursor
 * `--altmusic`: play alternative music track
 * `--nosound`: music is not played
