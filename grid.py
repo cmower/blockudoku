@@ -13,6 +13,8 @@ class Grid:
         (2, 0), (2, 1), (2, 2),
     ]
 
+    bonus_factor = 10
+
     def __init__(self, agent):
 
         self.agent = agent
@@ -97,6 +99,7 @@ class Grid:
                 n += 1
         if n == self.nrow:
             update_score += self.nrow
+            self.num_wipeouts += 1
             for (i, j) in self.block_pos_ref:
                 i += ii
                 j += jj
@@ -109,6 +112,7 @@ class Grid:
         self.positions_to_make_blank = []
 
         update_score = 0
+        self.num_wipeouts = 0
 
         for i in range(self.nrow):
 
@@ -119,6 +123,7 @@ class Grid:
 
             if n == self.ncol:
                 update_score += self.ncol
+                self.num_wipeouts += 1
                 for j in range(self.ncol):
                     self.positions_to_make_blank.append((i, j))
 
@@ -131,10 +136,9 @@ class Grid:
 
             if n == self.nrow:
                 update_score += self.nrow
+                self.num_wipeouts += 1
                 for i in range(self.nrow):
                     self.positions_to_make_blank.append((i, j))
-
-
 
         update_score += self.handle_block(0, 0)
         update_score += self.handle_block(3, 0)
@@ -150,5 +154,8 @@ class Grid:
 
         for i, j in self.positions_to_make_blank:
             self.pattern[i][j] = 'O'
+
+        if self.num_wipeouts > 1:
+            update_score += self.num_wipeouts*self.bonus_factor
 
         return update_score
