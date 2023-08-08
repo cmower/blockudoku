@@ -89,6 +89,27 @@ class Grid:
                         return False
         return True
 
+    def can_item_be_placed_anywhere(self, item):
+
+        array_item = item
+
+        for i in range(self.nrow):
+            for j in range(self.ncol):
+
+
+                array_grid = [[0]*item.ncol]*item.nrow
+                for ii in range(item.nrow):
+                    for jj in range(item.ncol):
+                        try:
+                            p = self.pattern[i+ii][j+jj]
+                        except:
+                            continue
+                        if p == 'X' and array_item[ii][jj] == 1:
+                            return False
+
+
+
+
     def handle_block(self, ii, jj):
         update_score = 0
         n = 0

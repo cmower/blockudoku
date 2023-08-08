@@ -119,6 +119,18 @@ class Item:
                     y = ytl + i*GridBlock.height
                     yield (x, y)
 
+    def numeric_pattern(self):
+        array = [[0]*self.ncol]*self.nrow
+        for i in range(self.nrow):
+            for j in range(self.ncol):
+                try:
+                    p = self.pattern[i][j]
+                except IndexError:
+                    continue
+                if p == 'X':
+                    array[i][j] = 1
+        return array
+
 class SingleSquare(Item):
     pattern = ['X']
 
